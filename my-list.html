@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My to-do list</title>
+    <link rel="stylesheet" href="list.css" >
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="https://cdn.firebase.com/v0/firebase.js"></script>
+  </head>
+  
+  <body>
+      <div id="empty-top"></div>
+      
+      <div align= "center" class="wrapper">
+        <h2>Add thing to your to-do list</h2>
+        <input id='input' type="text" placeholder="To-do-list" >
+      </div>
+      
+      <div class = "things"></div>
+        
+        <script>
+          var listdataRef = new Firebase("https://my-list.firebaseio.com");
+            var element = $("#input");
+            element.focus();
+            element.keypress(function(e){
+              if (e.which == 13){
+                var text = element.val();
+                listdataRef.push({text: text});
+                element.val('');
+              }
+              });
+
+          listdataRef.on("child_added", function(snapshot){
+            displayitem(snapshot);
+          });
+
+          function displayitem(item){
+            var li = $("<li />", { 
+              text: item.val().text
+            });
+            var box = $("<input />", {
+              'class' : 'check',
+              type : 'checkbox',
+              on: {
+                change: function(){
+                  if (this.checked){
+                   $(this).closest('li').wrapInner('<del />');
+                   if(confirm("Do you want to delete it completely")){
+                     var del = new Firebase("https://my-list.firebaseio.com/" + item.name());
+                     del.remove();
+                     window.location.reload();
+                   };
+                  }else{
+                    $(this).unwrap();
+                  }
+                }
+              }
+              });
+            $('.things').append(li.append(box));
+            }
+
+        </script>
+          
+    
+      
+  </body>
+</html>

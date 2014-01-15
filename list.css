@@ -1,0 +1,35 @@
+body{
+  background-color: #E3DDE3;
+}
+#empty-top{
+  height: 100px;
+}
+
+.wrapper{
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin: 0 auto;
+  width: 918px;
+  background-color: #fff
+}
+
+#button{
+  height:30px;
+  width: 50px;
+}
+
+#input{
+  width: 300px;
+  height: 30px;
+}
+
+.things{
+  padding-top: 30px;
+  margin-left: 550px;
+}
+
+.footer{
+  margin-top: 350px;
+  bottom: 0px;
+  border-top: 2px solid;
+}
